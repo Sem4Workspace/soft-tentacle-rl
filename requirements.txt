@@ -47,6 +47,9 @@ matplotlib>=3.6.0
 # OpenCV - Video rendering and image processing
 opencv-python>=4.6.0
 
+# TensorBoard - Training metrics visualization and logging
+tensorboard>=2.10.0
+
 # ==============================================================================
 # OPTIONAL: JUPYTER NOTEBOOKS
 # ==============================================================================
@@ -61,7 +64,6 @@ opencv-python>=4.6.0
 # ==============================================================================
 
 # Uncomment these for advanced usage:
-# tensorboard>=2.10.0        # For logging training metrics
 # wandb>=0.13.0              # For experiment tracking
 # optuna>=3.0.0              # For hyperparameter optimization
 # scikit-learn>=1.1.0        # For data analysis utilities
