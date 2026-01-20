@@ -1,0 +1,133 @@
+<mujoco model="stage6b_dual_tendon_chain">
+
+    <!-- ===================== -->
+    <!--  OPTIONS              -->
+    <!-- ===================== -->
+    <option timestep="0.002" gravity="0 0 -9.81" integrator="RK4"/>
+
+    <!-- ===================== -->
+    <!--  DEFAULTS             -->
+    <!-- ===================== -->
+    <default>
+        <joint
+            type="hinge"
+            axis="0 1 0"
+            damping="0.3"
+            limited="true"
+            range="-60 60"/>
+
+        <geom
+            type="capsule"
+            size="0.03"
+            density="1000"
+            friction="1 0.1 0.1"
+            rgba="0.2 0.6 0.9 1"/>
+
+        <site
+            size="0.01"
+            rgba="1 1 0 1"/>
+
+        <tendon
+            stiffness="200"
+            damping="5"/>
+    </default>
+
+    <!-- ===================== -->
+    <!--  WORLD                -->
+    <!-- ===================== -->
+    <worldbody>
+
+        <geom type="plane" size="5 5 0.1" rgba="0.9 0.9 0.9 1"/>
+
+        <body name="base" pos="0 0 0.1">
+
+            <!-- LINK 1 -->
+            <body name="link1" pos="0 0 0">
+                <joint name="j1"/>
+                <geom fromto="0 0 0  0 0 0.25"/>
+                <site name="s1_pos" pos="0.03 0 0.25"/>
+                <site name="s1_neg" pos="-0.03 0 0.25"/>
+
+                <!-- LINK 2 -->
+                <body name="link2" pos="0 0 0.25">
+                    <joint name="j2"/>
+                    <geom fromto="0 0 0  0 0 0.25"/>
+                    <site name="s2_pos" pos="0.03 0 0.25"/>
+                    <site name="s2_neg" pos="-0.03 0 0.25"/>
+
+                    <!-- LINK 3 -->
+                    <body name="link3" pos="0 0 0.25">
+                        <joint name="j3"/>
+                        <geom fromto="0 0 0  0 0 0.25"/>
+                        <site name="s3_pos" pos="0.03 0 0.25"/>
+                        <site name="s3_neg" pos="-0.03 0 0.25"/>
+
+                        <!-- LINK 4 -->
+                        <body name="link4" pos="0 0 0.25">
+                            <joint name="j4"/>
+                            <geom fromto="0 0 0  0 0 0.25"/>
+                            <site name="s4_pos" pos="0.03 0 0.25"/>
+                            <site name="s4_neg" pos="-0.03 0 0.25"/>
+
+                            <!-- LINK 5 -->
+                            <body name="link5" pos="0 0 0.25">
+                                <joint name="j5"/>
+                                <geom fromto="0 0 0  0 0 0.25"/>
+                                <site name="s5_pos" pos="0.03 0 0.25"/>
+                                <site name="s5_neg" pos="-0.03 0 0.25"/>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+        </body>
+    </worldbody>
+
+    <!-- ===================== -->
+    <!--  TENDONS              -->
+    <!-- ===================== -->
+    <tendon>
+
+        <!-- +X SIDE TENDON -->
+        <spatial name="tendon_pos">
+            <site site="s1_pos"/>
+            <site site="s2_pos"/>
+            <site site="s3_pos"/>
+            <site site="s4_pos"/>
+            <site site="s5_pos"/>
+        </spatial>
+
+        <!-- -X SIDE TENDON -->
+        <spatial name="tendon_neg">
+            <site site="s1_neg"/>
+            <site site="s2_neg"/>
+            <site site="s3_neg"/>
+            <site site="s4_neg"/>
+            <site site="s5_neg"/>
+        </spatial>
+
+    </tendon>
+
+    <!-- ===================== -->
+    <!--  ACTUATORS            -->
+    <!-- ===================== -->
+    <actuator>
+
+        <!-- Length control (safe for RL) -->
+        <position
+            name="ctrl_pos"
+            tendon="tendon_pos"
+            kp="50"
+            ctrllimited="true"
+            ctrlrange="-0.1 0.1"/>
+
+        <position
+            name="ctrl_neg"
+            tendon="tendon_neg"
+            kp="50"
+            ctrllimited="true"
+            ctrlrange="-0.1 0.1"/>
+
+    </actuator>
+
+</mujoco>

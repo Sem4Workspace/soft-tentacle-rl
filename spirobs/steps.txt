@@ -1,0 +1,7 @@
+for making the environment : py -3.11 -m venv venv
+
+venv\Scripts\activate
+
+python -m rl.train_ppo
+
+python -m rl.eval_policy
