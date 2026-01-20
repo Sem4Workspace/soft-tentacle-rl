@@ -1,0 +1,15 @@
+# virtual environments
+venv/
+**/venv/
+
+# python junk
+__pycache__/
+*.pyc
+*.pyd
+*.dll
+
+# ML artifacts
+*.pt
+*.pth
+*.ckpt
+*.log

@@ -1,0 +1,67 @@
+<mujoco model="stage1_single_hinge">
+    <!-- ===================== -->
+    <!--  GLOBAL OPTIONS       -->
+    <!-- ===================== -->
+    <option timestep="0.002" gravity="0 0 -9.81" integrator="RK4"/>
+
+    <!-- ===================== -->
+    <!--  VISUAL SETTINGS      -->
+    <!-- ===================== -->
+    <visual>
+        <global offwidth="800" offheight="600"/>
+    </visual>
+
+    <!-- ===================== -->
+    <!--  DEFAULT PARAMETERS   -->
+    <!-- ===================== -->
+    <default>
+        <joint damping="0.1" limited="true"/>
+        <geom friction="1 0.1 0.1" density="1000"/>
+        <motor ctrllimited="true" ctrlrange="-1 1"/>
+    </default>
+
+    <!-- ===================== -->
+    <!--  WORLD DEFINITION     -->
+    <!-- ===================== -->
+    <worldbody>
+
+        <!-- Ground plane (visual reference only) -->
+        <geom type="plane" size="5 5 0.1" rgba="0.9 0.9 0.9 1"/>
+
+        <!-- Base body (fixed) -->
+        <body name="base" pos="0 0 0.1">
+            
+            <!-- Link body -->
+            <body name="link1" pos="0 0 0">
+
+                <!-- HINGE JOINT -->
+                <joint
+                    name="hinge1"
+                    type="hinge"
+                    axis="0 1 0"
+                    pos="0 0 0"
+                    range="-90 90"/>
+
+                <!-- Visual + collision geometry -->
+                <geom
+                    name="link1_geom"
+                    type="capsule"
+                    fromto="0 0 0  0 0 0.3"
+                    size="0.03"
+                    rgba="0.2 0.6 0.9 1"/>
+
+            </body>
+        </body>
+    </worldbody>
+
+    <!-- ===================== -->
+    <!--  ACTUATORS            -->
+    <!-- ===================== -->
+    <actuator>
+        <motor
+            name="hinge_motor"
+            joint="hinge1"
+            gear="1"/>
+    </actuator>
+
+</mujoco>
